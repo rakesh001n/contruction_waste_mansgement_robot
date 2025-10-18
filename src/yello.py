@@ -1,10 +1,11 @@
 from inference_sdk import InferenceHTTPClient
 import cv2
+import os
 
 # Initialize Roboflow client
 CLIENT = InferenceHTTPClient(
     api_url="https://detect.roboflow.com",
-    api_key="bXxNgm3iZYPjAApRc8qO"   # replace with your actual API key
+    api_key= os.environ['API']   # replace with your actual API key
 )
 
 MODEL_ID = "construction-waste-segregation-bw374/9"   # replace with your model ID
@@ -32,7 +33,7 @@ while True:
         x2 = int(x + w / 2)
         y2 = int(y + h / 2)
 
-        # Draw bounding box and label
+        # Draw a bounding box and label
         cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
         cv2.putText(frame, f"{class_name} {conf:.2f}",
                     (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX,
@@ -48,3 +49,4 @@ while True:
 
 cap.release()
 cv2.destroyAllWindows()
+
